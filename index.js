@@ -12,7 +12,7 @@ app.use(
 );
 app.use(
   cors({
-    origin: ["http://localhost:3000", "*://localhost:*/*"],
+    origin: ["http://localhost:3000", "*://localhost:*/*", "*://vegety-crem.vercel.app/*"],
   })
 );
 
