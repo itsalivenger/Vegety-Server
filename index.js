@@ -10,7 +10,7 @@ let cartelRouter = require("./routes/cartelRoute");
 let adminRouter = require("./routes/adminRoute");
 let app = express();
 require("dotenv").config();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5050;
 
 app.use((req, res, next) => {
   req.db = db;
@@ -30,6 +30,7 @@ app.use(
       "*://localhost:*",
       "https://vegety-crem.vercel.app",
     ],
+    credentials: true
   })
 );
 
