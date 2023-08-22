@@ -1,15 +1,15 @@
 let express = require("express");
-let cors = require("cors");
-let db = require("./mongodbConnection");
-let prodsRouter = require("./routes/productsRoute");
-let newsLetterRoouter = require("./routes/newsletterRoute");
-let loginRouter = require("./routes/loginRoute");
-let signupRouter = require("./routes/signupRoute");
-let searchRouter = require("./routes/searchRoute");
-let cartelRouter = require("./routes/cartelRoute");
-let adminRouter = require("./routes/adminRoute");
+// let cors = require("cors");
+// let db = require("./mongodbConnection");
+// let prodsRouter = require("./routes/productsRoute");
+// let newsLetterRoouter = require("./routes/newsletterRoute");
+// let loginRouter = require("./routes/loginRoute");
+// let signupRouter = require("./routes/signupRoute");
+// let searchRouter = require("./routes/searchRoute");
+// let cartelRouter = require("./routes/cartelRoute");
+// let adminRouter = require("./routes/adminRoute");
 let app = express();
-require("dotenv").config();
+// require("dotenv").config();
 const PORT = process.env.PORT || 5050;
 
 // app.use((req, res, next) => {
@@ -59,6 +59,6 @@ app.get("/", (req, res) => {
 // // Admin Express Router
 // app.use("/admin", adminRouter);
 
-// app.listen(PORT, () => {
-//   console.log(`listening on port ${PORT} for requests`);
-// });
+app.listen(PORT, () => {
+  console.log(`listening on port ${PORT} for requests`);
+});
