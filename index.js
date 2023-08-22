@@ -35,7 +35,7 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-  res.send("dedrno");
+  res.send({txt: "dedrno"});
 });
 
 // Prducts Express Roouter
