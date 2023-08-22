@@ -12,11 +12,10 @@ let app = express();
 require("dotenv").config();
 const PORT = process.env.PORT;
 
-
-app.use((req, res, next)=>{
+app.use((req, res, next) => {
   req.db = db;
   next();
-})
+});
 app.use(express.json());
 app.use(express.text());
 app.use(
@@ -34,9 +33,9 @@ app.use(
   })
 );
 
-app.get("/", (req, res)=>{
+app.get("/", (req, res) => {
   res.send("dedrno");
-})
+});
 
 // Prducts Express Roouter
 app.use("/products", prodsRouter);
@@ -58,7 +57,6 @@ app.use("/Cartel", cartelRouter);
 
 // Admin Express Router
 app.use("/admin", adminRouter);
-
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT} for requests`);
