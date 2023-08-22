@@ -1,6 +1,6 @@
 let express = require("express");
 let cors = require("cors");
-// let db = require("./mongodbConnection");
+let db = require("./mongodbConnection");
 // let prodsRouter = require("./routes/productsRoute");
 // let newsLetterRoouter = require("./routes/newsletterRoute");
 // let loginRouter = require("./routes/loginRoute");
@@ -12,10 +12,10 @@ let app = express();
 require("dotenv").config();
 const PORT = process.env.PORT || 5050;
 
-// app.use((req, res, next) => {
-//   req.db = db;
-//   next();
-// });
+app.use((req, res, next) => {
+  req.db = db;
+  next();
+});
 app.use(express.json());
 app.use(express.text());
 app.use(
