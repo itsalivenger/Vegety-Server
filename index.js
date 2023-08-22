@@ -34,6 +34,10 @@ app.use(
   })
 );
 
+app.get("/", (req, res)=>{
+  res.send("dedrno");
+})
+
 // Prducts Express Roouter
 app.use("/products", prodsRouter);
 
