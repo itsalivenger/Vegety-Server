@@ -1,6 +1,6 @@
 let express = require("express");
 // let cors = require("cors");
-// let db = require("./mongodbConnection");
+let db = require("./mongodbConnection");
 // let prodsRouter = require("./routes/productsRoute");
 // let newsLetterRoouter = require("./routes/newsletterRoute");
 // let loginRouter = require("./routes/loginRoute");
