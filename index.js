@@ -29,7 +29,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "*://localhost:*",
-      "*://vegety-crem.vercel.app",
+      "https://vegety-crem.vercel.app",
     ],
   })
 );
