@@ -28,7 +28,8 @@ app.use(
     origin: [
       "http://localhost:3000",
       "*://localhost:*",
-      "https://vegety-crem.vercel.app",
+      "https://vegety-crem.vercel.app","https://vegety-crem.vercel.app/*",
+      "*://vegety-crem.vercel.app/*"
     ],
     credentials: true
   })
