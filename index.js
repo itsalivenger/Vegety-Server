@@ -10,7 +10,7 @@ let cartelRouter = require("./routes/cartelRoute");
 let adminRouter = require("./routes/adminRoute");
 let app = express();
 require("dotenv").config();
-const PORT = process.env.PORT || 5050;
+const PORT = process.env.PORT || 3001;
 
 app.use((req, res, next) => {
   req.db = db;
