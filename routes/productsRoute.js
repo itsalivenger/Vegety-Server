@@ -2,15 +2,22 @@ let express = require("express");
 let router = express.Router();
 
 function addProductProperties(prod) {
-  return { ...prod, timesBought: 0, dateAdded: new Date(), rating: 5, isAvailable: true };
+  return {
+    ...prod,
+    timesBought: 0,
+    dateAdded: new Date(),
+    rating: 5,
+    isAvailable: true,
+  };
 }
 
 function setPropsToLower(obj) {
   for (const key in obj) {
-    if(typeof obj[key] == "string"){
-      obj[key] = obj[key].toLowerCase()
+    if (typeof obj[key] == "string") {
+      obj[key] = obj[key].toLowerCase();
     }
   }
+  return obj
 }
 
 router.post("/", async (req, res) => {
@@ -19,7 +26,6 @@ router.post("/", async (req, res) => {
   let collection = req.db.collection("Products");
   product = addProductProperties(product);
   setPropsToLower(product);
-
 
   // check if the product already exists
   let exists = await collection.findOne({ prodName: product.prodName });
@@ -34,29 +40,59 @@ router.post("/", async (req, res) => {
   exists = {};
 });
 
-
-
-router.get("/", async (req, res) => {
+router.get("/:filter", async (req, res) => {
   console.log("got a get request to /products to get all products");
+  let { searchVal, maxVal, minVal, types = [] } = JSON.parse(req.params.filter);
+  let query = {};
+
+
+  if(searchVal){
+    query.prodName = new RegExp(searchVal, "i")
+  }
+  if(maxVal){
+    query.prodPrice = {
+      $lte: parseInt(maxVal)
+    }
+  }
+  if(minVal){
+    query.prodPrice = {
+      ...query.prodPrice,
+      $gte: parseInt(minVal)
+    }
+  }
+  if(types.length){
+    query.prodType = {
+      $in: setPropsToLower(types)
+    }
+  }
+  console.log(query);
   let collection = req.db.collection("Products");
-  let arr = await collection.find({}).toArray();
+  let arr = await collection
+    .find(query)
+    .toArray();
+  console.log(arr);
   res.send(arr);
 });
 
-router.put("/", async (req, res)=>{
-  let {newProduct, oldProduct} = req.body;
+router.put("/", async (req, res) => {
+  let { newProduct, oldProduct } = req.body;
   console.log("got request in /products with a Put request");
   let collection = req.db.collection("Products");
-  let result = await collection.findOneAndUpdate({prodName: oldProduct.prodName}, {$set: newProduct})
+  let result = await collection.findOneAndUpdate(
+    { prodName: oldProduct.prodName },
+    { $set: newProduct }
+  );
   // console.log(result);
-  res.send({txt: "updated product successfully", res: req.body})
-})
+  res.send({ txt: "updated product successfully", res: req.body });
+});
 
-router.delete("/", async (req, res)=>{
+router.delete("/", async (req, res) => {
   let prod = req.body;
+  console.log("got a delete request");
   let collection = req.db.collection("Products");
-  let result = await collection.deleteOne(prod);
+  let result = await collection.findOneAndDelete({ prodName: prod.prodName });
   console.log(result);
-})
+  res.send({ txt: "was sent successfully", result });
+});
 
 module.exports = router;

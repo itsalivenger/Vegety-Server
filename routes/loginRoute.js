@@ -6,13 +6,10 @@ router.post("/", async (req, res, next) => {
   let obj = req.body;
   let collection = req.db.collection("Users");
   let doc = await collection.findOne(obj);
-  if (!doc) {
-    resObj.msg = "couldn't find user";
-  } else {
-    resObj.msg = "found user";
-  }
+  resObj.found = doc ? true : false;
+  resObj.user = doc;
 
-  console.log(resObj.msg);
+  console.log(resObj.found);
   res.send(resObj);
 });
 

@@ -8,6 +8,8 @@ let signupRouter = require("./routes/signupRoute");
 let searchRouter = require("./routes/searchRoute");
 let cartelRouter = require("./routes/cartelRoute");
 let adminRouter = require("./routes/adminRoute");
+let mostSoldRouter = require("./routes/mostSoldRoute");
+let ProductPreviewRouter = require("./routes/productPreviewRoute");
 let app = express();
 require("dotenv").config();
 const PORT = process.env.PORT || 3001;
@@ -28,10 +30,11 @@ app.use(
     origin: [
       "http://localhost:3000",
       "*://localhost:*",
-      "https://vegety-crem.vercel.app","https://vegety-crem.vercel.app/*",
-      "*://vegety-crem.vercel.app/*"
+      "https://vegety-crem.vercel.app",
+      "https://vegety-crem.vercel.app/*",
+      "*://vegety-crem.vercel.app/*",
     ],
-    credentials: true
+    credentials: true,
   })
 );
 
@@ -59,6 +62,12 @@ app.use("/Cartel", cartelRouter);
 
 // Admin Express Router
 app.use("/admin", adminRouter);
+
+//Most Sold Express Router
+app.use("/mostSold", mostSoldRouter);
+
+// Item Review express Router
+app.use("/ProductPreview", ProductPreviewRouter);
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT} for requests`);
