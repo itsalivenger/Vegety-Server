@@ -1,18 +1,31 @@
 let router = require("express").Router();
 let resObj = {}
 
+
+function addUserProperties(user) {
+  return {
+    ...user, cart: [], itemsBought: [], loyaltyPts: 0
+  }
+}
+
 // SIGNUP ROUTE POST REQUEST
 router.post("/", async (req, res, next) => {
-  let obj = req.body;
+  let user = req.body;
+  user = addUserProperties(user);
   let collection = req.db.collection("Users");
-  let doc = await collection.findOne({ email: obj.email });
+  let doc = await collection.findOne({ email: user.email });
   if (!doc) {
     console.log("makaaaynch an ajoutiwh f db");
-    collection.insertOne(obj, (err, insertRes) => {
-      if (err) throw err;
+    let insertRes = await collection.insertOne(user);
       console.log(insertRes);
       resObj.msg = "added user to db";
-    });
+      resObj.created = true;
+      resObj.user = {
+        fullName: user.fullName,
+        email: user.email,
+        adresse: user.adresse,
+        phoneNumber: user.phoneNumber
+      };
   } else {
     resObj.msg = "user already exists";
     console.log("already kayn");
