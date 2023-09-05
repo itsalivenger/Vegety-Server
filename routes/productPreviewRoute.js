@@ -9,6 +9,8 @@ router.get("/:itemId", async (req, res)=>{
 })
 
 router.put("/", async (req, res)=>{
+    // handles cart for clear cart functionnality and the add to cart
+    // it replaces the user's cart in the db with the front end's one
     let user = req.body;
     let _id = new ObjectId(user._id);
     let collection = req.db.collection("Users");
