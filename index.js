@@ -10,6 +10,8 @@ let cartelRouter = require("./routes/cartelRoute");
 let adminRouter = require("./routes/adminRoute");
 let mostSoldRouter = require("./routes/mostSoldRoute");
 let ProductPreviewRouter = require("./routes/productPreviewRoute");
+let homeRouter = require("./routes/home");
+
 let app = express();
 require("dotenv").config();
 const PORT = process.env.PORT || 3001;
@@ -38,9 +40,7 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
-  res.send("dedrno");
-});
+app.use("/", homeRouter);
 
 // Prducts Express Roouter
 app.use("/products", prodsRouter);
