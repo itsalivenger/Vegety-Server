@@ -1,5 +1,6 @@
-let express = require("express");
-let router = express.Router();
+let router = require("express").Router();
+let { GridFSBucket } = require("mongodb");
+let multer = require("multer");
 
 function addProductProperties(prod) {
   return {
@@ -13,7 +14,7 @@ function addProductProperties(prod) {
 
 function setPropsToLower(obj) {
   for (const key in obj) {
-    if (typeof obj[key] == "string") {
+    if (typeof obj[key] == "string" && (key != "desc" && key != "prodName")) {
       obj[key] = obj[key].toLowerCase();
     }
   }
@@ -23,9 +24,11 @@ function setPropsToLower(obj) {
 router.post("/", async (req, res) => {
   console.log("got request in the /products to add a product");
   let product = req.body;
+  let bucket = new GridFSBucket(req.db);
+  
   let collection = req.db.collection("Products");
   product = addProductProperties(product);
-  setPropsToLower(product);
+  let temp = {}
 
   // check if the product already exists
   let exists = await collection.findOne({ prodName: product.prodName });
@@ -62,7 +65,7 @@ router.get("/:filter", async (req, res) => {
   }
   if(types.length){
     query.prodType = {
-      $in: setPropsToLower(types)
+      $in: types
     }
   }
   console.log(query);

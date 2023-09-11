@@ -1,12 +1,6 @@
 let router = require("express").Router();
 let { ObjectId } = require("mongodb");
-
-function transformIdsObject(arr) {
-  let res = arr.map((e) => {
-    return new ObjectId(e._id);
-  });
-  return res;
-}
+let { transformIdsObject } = require("../functions/findAllOfArr");
 
 router.post("/", async (req, res) => {
   let cartel = req.body;

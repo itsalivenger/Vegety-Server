@@ -11,6 +11,8 @@ let adminRouter = require("./routes/adminRoute");
 let mostSoldRouter = require("./routes/mostSoldRoute");
 let ProductPreviewRouter = require("./routes/productPreviewRoute");
 let homeRouter = require("./routes/home");
+let checkoutRouter = require("./routes/checkout.js");
+let orderHistoryRouter = require("./routes/orderHistoryRoute.js")
 
 let app = express();
 require("dotenv").config();
@@ -68,6 +70,11 @@ app.use("/mostSold", mostSoldRouter);
 
 // Item Review express Router
 app.use("/ProductPreview", ProductPreviewRouter);
+
+// checkout express Router
+app.use("/checkout", checkoutRouter);
+
+app.use("/history", orderHistoryRouter);
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT} for requests`);
